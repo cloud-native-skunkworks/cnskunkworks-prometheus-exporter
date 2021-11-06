@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "cnskunkworks-prometheus-exporter.fullname" . }}
+  labels:
+    {{- include "cnskunkworks-prometheus-exporter.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: cnskunkworks-prometheus-exporter
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: cnskunkworks-prometheus-exporter
+      helm.sh/chart: cnskunkworks-prometheus-exporter-0.1.0   
+  endpoints:
+  - port: metrics
